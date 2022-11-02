@@ -237,7 +237,7 @@ class Number:
                 calc = int(vv * tens)
                 if calc > last * 10 + 9:
                     calc -= 1
-                lest = calc
+                last = calc
                 self._n[pow] = calc % 10
                 tmp = vv - float(calc) / tens
                 pow += 1
