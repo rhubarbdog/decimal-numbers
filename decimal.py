@@ -269,7 +269,7 @@ class Number:
             self._number[0] = calc
             temp = value - float(calc)
             pow = 1
-            while pow <= 20 and temp > 0.0:
+            while pow <= 40 and temp > 0.0:
                 tens = 10.0**pow
                 calc = int(value * tens)
                 if calc > last * 10 + 9:
