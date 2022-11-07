@@ -15,7 +15,7 @@ two = decimal.Number(2)
 # initialise with a floating point number
 three = decimal.Number(3.0)
 pi = decimal.Number(3.1415)
-# initialise with a simple string
+# initialise with a simple string, can be more accurate than floating point numbers
 number102_57 = decimal.Numner("102.57")
 
 # add and subtract them
