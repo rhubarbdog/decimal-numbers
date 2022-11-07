@@ -17,11 +17,11 @@ three = decimal.Number(3.0)
 pi = decimal.Number(3.1415)
 # initialise with a simple string, can be more accurate than floating
 # point numbers
-number102_57 = decimal.Numner("102.57")
+number102_57 = decimal.Number("102.57")
 
 # add and subtract them
 print(decimal.add(one, two))
-print(decimal.subtract(one two))
+print(decimal.subtract(one, two))
 
 # calculate the area of a circle radius 2
 area = decimal.multiply(pi, decimal.multiply(two, two))
