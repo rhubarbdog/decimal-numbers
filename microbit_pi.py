@@ -51,7 +51,7 @@ with open("square.txt", 'w') as file:
     file.write(str(square))
 
 print('circle', circle)    
-with open("cirle.txt", 'w') as file:
+with open("circle.txt", 'w') as file:
     file.write(str(circle))
 
 pi = decimal.divide(circle, square, 45)

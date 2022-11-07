@@ -1,13 +1,13 @@
 import decimal
 
-pi            = decimal.Number("3.1415926535897932384626433832795028842")
+pi = decimal.Number("3.1415926535897932384626433832795028842")
 
 def root(factor, power, iterations):
-    if not isinstance(factor, decimal.Number) or not isinstance(power, int) or \
-       not isinstance(iterations, int):
+    if not isinstance(factor, decimal.Number) or \
+       not isinstance(power, int) or not isinstance(iterations, int):
         raise TypeError
 
-    if power < 1 or iterations < 0:
+    if power <= 0 or iterations < 0:
         raise ValueError
 
     if power == 1 or factor.is_zero():
@@ -30,7 +30,6 @@ def root(factor, power, iterations):
         product = decimal.multiply(test, test)
         for _ in range(2, power):
             product = decimal.multiply(product, test)
-            
         
         if product == abs_factor:
             break
@@ -61,41 +60,6 @@ def root(factor, power, iterations):
         test.set_error()
 
     return test
-
-
-def e_to_the_x(factor, iterations, precision):
-    if not isinstance(factor, decimal.Number) or \
-       not isinstance(iterations, int) or not isinstance(precision, int):
-        raise TypeError
-
-    if iterations < 0 or precision < 0:
-        raise ValueError
-    
-    abs_factor = decimal.absolute(factor)
-    one = decimal.Number(1)
-    numerator = decimal.copy(abs_factor)
-    denominator = decimal.Number(1)
-    term = decimal.Number(1)
-    sigma = decimal.Number(1)
-
-    if factor.is_zero() or iterations == 0:
-        return sigma
-
-    sigma = decimal.add(sigma, numerator)
-
-    for _ in range(1, iterations):
-        term = decimal.add(term, one)
-        numerator = decimal.multiply(numerator, abs_factor)
-        denominator = decimal.multiply(denominator, term)
-
-        sigma = decimal.add(sigma, decimal.divide(numerator, \
-                                                  denominator, \
-                                                  precision))
-
-    if factor.is_negative():
-        sigma = decimal.divide(one, sigma, precision)
-                            
-    return sigma
 
 
 def radians(degrees, precision):
@@ -228,3 +192,36 @@ def cosine(factor, iterations, precision):
 
     return sigma
                                 
+
+def _to_the_power(factor, power):
+    product = decimal.Number(1)
+
+    for _ in range(power):
+        product = decimal.multiply(product, factor)
+
+    return product
+
+
+def y_to_the_x(factor_one, factor_two, iterations):
+    product = decimal.Number(1)
+    root_pow = 10
+    one = decimal.Number(1)
+
+    work = decimal.integer(factor_two)
+
+    while work >= one:
+        product = decimal.multiply(product, factor_one)
+        work = decimal.subtract(work, one)
+        
+    if factor_two.places() != 0:
+        work = decimal.fraction(factor_two)
+        work = decimal.exponent_10(work, factor_two.places())
+        root_pow = 10 ** factor_two.places()
+        temp = decimal.Number(1)
+        while work >= one:
+            temp = decimal.multiply(temp, factor_one)
+            work = decimal.subtract(work, one)
+
+        product = decimal.multiply(product, root(temp, root_pow, iterations))
+
+    return product

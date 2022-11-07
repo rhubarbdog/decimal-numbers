@@ -230,16 +230,15 @@ class Number:
             calc = int(vv) % 10
             last = calc
             self._n[0] = calc
-            tmp = vv - float(calc)
+            tens = 1
             pow = 1
-            while pow <= 20 and tmp > 0.0:
-                tens = 10.0**pow
+            while pow <= 20 and vv - float(calc) / tens > 0.0:
+                tens = 10.0 ** pow
                 calc = int(vv * tens)
                 if calc > last * 10 + 9:
                     calc -= 1
                 last = calc
                 self._n[pow] = calc % 10
-                tmp = vv - float(calc) / tens
                 pow += 1
             flt = _S._n
             pla = _S._p

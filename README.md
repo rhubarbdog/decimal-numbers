@@ -6,6 +6,45 @@ Numbers can be compared with relational operators <, <=, ==, !=, >= and >.
 They also can be printed with the print() function as they have the `__str__`
 magic method.
 
+*Examples*
+
+```
+# initialise with an integer
+one = decimal.Number(1)
+two = decimal.Number(2)
+# initialise with a floating point number
+three = decimal.Number(3.0)
+pi = decimal.Number(3.1415)
+# initialise with a simple string
+number102_57 = decimal.Numner("102.57")
+
+# add and subtract them
+print(decimal.add(one, two))
+print(decimal.subtract(one two))
+
+# calculate the area of a circle radius 2
+area = decimal.multiply(pi, decimal.multiply(two, two))
+
+# divide to a greater precision than flaoting point numbers
+third = decimal.divide(one, three, 50)
+
+# get the integer or faction portion of the number
+print(decimal.integer(number102_57))
+print(decimal.fraction(number102_57))
+
+# round the number up
+print(decimal.round(number102_57, 1))
+
+# truncate it to 'z' decimal place with this code fragment
+z = 3
+truncated = decimal.exponent_10(pi, z)
+truncated = decimal.integer(truncated)
+truncated = decimal.exponent_10(truncated, -z)
+
+print(truncated)
+```
+
+
 *Methods*
 <table>
 <tr><td><code>is_zero()</code></td><td>A boolean, returns true if the number

@@ -267,16 +267,15 @@ class Number:
             calc = int(value) % 10
             last = calc
             self._number[0] = calc
-            temp = value - float(calc)
+            tens = 1
             pow = 1
-            while pow <= 40 and temp > 0.0:
-                tens = 10.0**pow
+            while pow <= 40 and value - float(calc) / tens > 0.0:
+                tens = 10.0 ** pow
                 calc = int(value * tens)
                 if calc > last * 10 + 9:
                     calc -=1
                 last = calc
                 self._number[pow] = calc % 10
-                temp = value - float(calc) / tens
                 pow += 1
                 
             answer = self._number
