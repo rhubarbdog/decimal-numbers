@@ -9,6 +9,8 @@ magic method.
 *Examples*
 
 ```
+import decimal
+
 # initialise with an integer
 one = decimal.Number(1)
 two = decimal.Number(2)
