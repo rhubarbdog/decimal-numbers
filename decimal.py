@@ -49,7 +49,7 @@ class Number:
 
         if self._places != 0:
             output += Number.POINT
-
+            
             for digit in range(self._digits, self._bytes()):
                 output += str(int(self._number[digit]))
 
@@ -74,7 +74,8 @@ class Number:
     def __ge__(self, factor):
         return self._compare(factor) > -1
 
-    
+    #
+    # Simple numeric and boolean user methods
     def digits(self):
         return self._digits
 
@@ -108,6 +109,7 @@ class Number:
         self._error = False
 
 
+    # Remove all leading and trailin zeros
     def _squeeze(self):
         digits = 0
         places = 0
@@ -143,6 +145,7 @@ class Number:
             del self._number
             self._number = temp
 
+    # absolute compare, just compare magnitude not sign of the numbers
     def _abs_comp(self, factor):
         for pow in reversed(range(-max(self._places, factor._places), \
                                   max(self._digits, factor._digits))):
@@ -178,13 +181,15 @@ class Number:
         return comp
 
 
+    # used to create a number big enough for the result
     def _recreate(self, digits, places):
         del self._number
         self._number = bytearray(digits + places)
         self._digits = digits
         self._places = places
 
-        
+
+    # Convert string to a decimal number
     def _atod(self, value):
         error = False
         minus = False
@@ -233,7 +238,8 @@ class Number:
         if not self.is_zero():
             self._minus = minus
 
-        
+
+    # Convert a floating point number to a decimal number
     def _gtod(self, value):
         if value < 0.0:
             value =-value
@@ -312,7 +318,8 @@ class Number:
 
         self._minus = minus
 
-        
+
+    # Convert an integer to a decimal number
     def _itod(self, value):
 
         if value == 0:
@@ -342,6 +349,7 @@ class Number:
                 value //= 10
 
 
+    # Retrieve a digit from a decimal number
     def _get_digit(self, power):
         if power >= self._digits or power < -self._places:
             return 0
@@ -353,6 +361,8 @@ class Number:
 
         return int(self._number[i])
 
+    
+    # Place a digit itno a decima number
     def _set_digit(self, power, value):
         if power >= self._digits or power < -self._places:
             return
@@ -408,7 +418,7 @@ def _mini_half(factor, modulus):
 
     return (result // 2, result % 2)
 
-
+# perform absolute addition or subtraction
 def _abs_add_sub(adding, big_factor, small_factor):
     digits = max(big_factor._digits, small_factor._digits)
     places = max(big_factor._places, small_factor._places)
@@ -438,7 +448,7 @@ def _abs_add_sub(adding, big_factor, small_factor):
         
     return result
 
-
+# duplicate a number a = copy(b) is the correct way to express a = b
 def copy(factor):
     if not isinstance(factor, Number):
         raise TypeError
@@ -452,7 +462,7 @@ def copy(factor):
     new._error = factor._error
     return new
 
-
+# return a positive copy of the number
 def absolute(factor):
     if not isinstance(factor, Number):
         raise TypeError
@@ -462,7 +472,7 @@ def absolute(factor):
 
     return new
 
-
+# return the integer portion of a number
 def integer(factor):
     if not isinstance(factor, Number):
         raise TypeError
@@ -475,7 +485,7 @@ def integer(factor):
 
     return new
 
-
+# retrun the fractional porion of a number
 def fraction(factor):
     if not isinstance(factor, Number):
         raise TypeError
@@ -489,6 +499,7 @@ def fraction(factor):
     return new
 
 
+# return a number rounded to the given number of places 
 def round(factor, places):
     if not isinstance(factor, Number) or not isinstance(places, int):
         raise TypeError
@@ -521,6 +532,7 @@ def round(factor, places):
     return result
 
 
+# Addition
 def add(factor_one, factor_two):
     if not isinstance(factor_one, Number) or \
        not isinstance(factor_two, Number):
@@ -563,6 +575,7 @@ def add(factor_one, factor_two):
     return _abs_add_sub(False, factor_one, factor_two)
     
 
+# Subtraction
 def subtract(factor_one, factor_two):
     if not isinstance(factor_one, Number) or \
        not isinstance(factor_two, Number):
@@ -614,7 +627,7 @@ def subtract(factor_one, factor_two):
 
     return result
 
-
+# Multiplication
 def multiply(factor_one, factor_two):
     if not isinstance(factor_one, Number) or \
        not isinstance(factor_two, Number):
@@ -679,6 +692,7 @@ def multiply(factor_one, factor_two):
     return result
 
 
+# Division
 def divide(numerator, denominator, precision):
     if not isinstance(precision, int) or \
        not isinstance(numerator, Number) or \
@@ -878,6 +892,7 @@ def divide(numerator, denominator, precision):
     return result
                     
 
+# return ne number, factor * 10 ^ power_of_ten
 def exponent_10(factor, power_of_ten):
     if not isinstance(factor, Number):
         raise TypeError
@@ -921,6 +936,7 @@ def exponent_10(factor, power_of_ten):
     return result
 
 
+# Half a number useful for interval division, fastet than decimal.divide
 def half(factor):
     if not isinstance(factor, Number):
         raise TypeError
